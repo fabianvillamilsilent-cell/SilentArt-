@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silent Art - Galería</title>
+    <!-- Cargamos una tipografía Serif literaria de Google Fonts (Playfair Display / Cinzel) de respaldo con la estética "Garcia Marquez" -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Variables de Paleta Neutra y Fuentes */
+        :root {
+            --bg-blanco-roto: #F9F9F6;
+            --bg-gris-claro: #EFEFEA;
+            --texto-oscuro: #1A1A19;
+            --texto-mutado: #60605C;
+            --borde-sutil: rgba(0, 0, 0, 0.08);
+            /* Definición de la fuente Garcia Marquez (con respaldos elegantes) */
+            --fuente-garcia-marquez: 'Playfair Display', 'Cinzel', Georgia, serif;
+            --fuente-sans: 'Montserrat', sans-serif;
+        }
+
+        /* Reseteo General Estilo Minimalista */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--fuente-sans);
+            background-color: var(--bg-blanco-roto);
+            color: var(--texto-oscuro);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- CONTENEDOR DE VÍDEO DE FONDO EN EL HEADER --- */
+        .header-video-container {
+            position: relative;
+            width: 100%;
+            height: 75vh; /* Altura elegante para dar paso inmediato a la galería abajo */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+        }
+
+        /* Video de Vimeo incrustado de fondo en bucle y responsive */
+        .header-video-container iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 56.25vw; /* Ratio 16:9 */
+            min-height: 75vh;
+            min-width: 133.33vh; /* 75vh * 1.77 */
+            transform: translate(-50%, -50%);
+            pointer-events: none; /* Evita que el usuario interactúe con el reproductor */
+            opacity: 0.65; /* Atenuación sutil para un look más artístico y legible */
+        }
+
+        /* Capa de superposición neutra para suavizar el video y unificar el color */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(249, 249, 246, 0.2), rgba(249, 249, 246, 0.95));
+            z-index: 1;
+        }
+
+        /* Contenido del Encabezado */
+        .header-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .header-content h1 {
+            font-family: var(--fuente-garcia-marquez);
+            font-size: 4.5rem;
+            font-weight: 400;
+            letter-spacing: -1px;
+            color: var(--texto-oscuro);
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(249, 249, 246, 0.5);
+        }
+
+        .header-content p {
+            font-family: var(--fuente-garcia-marquez);
+            font-style: italic;
+            font-size: 1.35rem;
+            color: var(--texto-oscuro);
+            font-weight: 400;
+            line-height: 1.7;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* --- SECCIÓN GALERÍA --- */
+        .gallery-section {
+            padding: 80px 4% 120px 4%;
+            background-color: var(--bg-blanco-roto);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2x2 para las 4 obras principales */
+            gap: 40px;
+        }
+
+        /* Tarjeta de Arte Individual */
+        .art-card {
+            background-color: var(--bg-gris-claro);
+            padding: 25px;
+            border: 1px solid var(--borde-sutil);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .art-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.03);
+            background-color: #FFFFFF;
+        }
+
+        /* Contenedor de Imagen de la Obra */
+        .art-image-wrapper {
+            width: 100%;
+            height: 480px; /* Altura ideal fija conservando simetría */
+            overflow: hidden;
+            background-color: #E0E0DB;
+            margin-bottom: 20px;
+        }
+
+        .art-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .art-card:hover .art-image-wrapper img {
+            transform: scale(1.03);
+        }
+
+        /* Meta Información de la Obra */
+        .art-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-top: 1px solid var(--borde-sutil);
+            padding-top: 15px;
+            margin-top: auto;
+        }
+
+        .art-title {
+            font-family: var(--fuente-garcia-marquez);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--texto-oscuro);
+        }
+
+        .art-year {
+            font-size: 0.9rem;
+            color: var(--texto-mutated);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* --- PIE DE PÁGINA --- */
+        footer {
+            background-color: var(--bg-gris-claro);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid var(--borde-sutil);
+        }
+
+        footer p {
+            font-size: 0.85rem;
+            color: var(--texto-mutated);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* --- RESPONSIVE / ADAPTACIÓN MÓVIL --- */
+        @media (max-width: 900px) {
+            .gallery-grid {
+                grid-template-columns: 1fr; /* 1 columna en pantallas medianas o pequeñas */
+                gap: 30px;
+            }
+            .header-content h1 {
+                font-size: 3rem;
+            }
+            .header-content p {
+                font-size: 1.1rem;
+            }
+            .art-image-wrapper {
+                height: 380px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado con Video de Vimeo en Fondo -->
+    <header class="header-video-container">
+        <!-- Parámetros aplicados: background=1 (esconde controles y autoreproduce), loop=1, muted=1 -->
+        <iframe src="https://player.vimeo.com/video/1140519228?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" 
+                frameborder="0" 
+                allow="autoplay; fullscreen" 
+                allowfullscreen>
+        </iframe>
+        <div class="video-overlay"></div>
+        
+        <div class="header-content">
+            <h1>Silent Art</h1>
+            <p>Una startup donde el cine y la música independiente se encuentran para promover la escena musical colombiana</p>
+        </div>
+    </header>
+
+    <!-- Sección Central de la Galería de Arte (Grid) -->
+    <main class="gallery-section">
+        <div class="gallery-grid">
+            
+            <!-- Obra 1 -->
+            <article class="art-card">
+                <div class="art-image-wrapper">
+                    <img src="SaveClip.App_674430640_17923542885274022_379000298803237393_n.jpg" alt="Petroglifos Desconexiones - Poster Art">
+                </div>
+                <div class="art-info">
+                    <span class="art-title">Petroglifos Desconexiones</span>
+                    <span class="art-year">2024</span>
+                </div>
+            </article>
+
+            <!-- Obra 2 -->
+            <article class="art-card">
+                <div class="art-image-wrapper">
+                    <img src="SaveClip.App_584802649_18548039740060435_3389140409908452337_n.jpg" alt="Ventana Sur - Rio de la Plata">
+                </div>
+                <div class="art-info">
+                    <span class="art-title">Encuentro Ventana Sur</span>
+                    <span class="art-year">2025</span>
+                </div>
+            </article>
+
+            <!-- Obra 3 -->
+            <article class="art-card">
+                <div class="art-image-wrapper">
+                    <img src="SaveClip.App_659199041_18132861133548253_5843782470981711894_n.jpg" alt="Silent Art Founders - Colombia Co">
+                </div>
+                <div class="art-info">
+                    <span class="art-title">Co-creadores Silent Art</span>
+                    <span class="art-year">2025</span>
+                </div>
+            </article>
+
+            <!-- Obra 4 -->
+            <article class="art-card">
+                <div class="art-image-wrapper">
+                    <img src="SaveClip.App_483555129_18496649683060435_5673490484455545204_n.jpg" alt="Festival de Málaga MAFIZ">
+                </div>
+                <div class="art-info">
+                    <span class="art-title">Internacionalización MAFIZ</span>
+                    <span class="art-year">2026</span>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Pie de Página / Footer -->
+    <footer>
+        <p>&copy; 2026 Silent Art. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
